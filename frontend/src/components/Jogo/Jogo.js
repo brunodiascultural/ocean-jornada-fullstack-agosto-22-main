@@ -1,7 +1,7 @@
 import "./Jogo.css";
 import nuvens from "../../assets/clouds.png";
 import cano from "../../assets/pipe.png";
-import mario from "../../assets/mario.png";
+import mario from "../../assets/mario.gif";
 
 function Jogo() {
     return (
@@ -10,7 +10,7 @@ function Jogo() {
             
             <img className="cano" src={cano} alt="Cano" />
             
-            <img className="mario" src={mario} alt="Mario" /> 
+            <img className="mario mario-pulo" src={mario} alt="Mario" /> 
 
             <div className="chao"></div>
         </div>
