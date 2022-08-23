@@ -46,7 +46,7 @@
 }
 
 .mario-pulo {
-    animation: mario-pulo 0.6s infinite;
+    animation: mario-pulo 0.6s;
 }
 
 @keyframes mario-pulo {
