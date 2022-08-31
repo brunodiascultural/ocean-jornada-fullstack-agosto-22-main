@@ -80,6 +80,9 @@ function Jogo() {
     },
     [estaMorto, pontos]
   );
+    
+    /* 
+    - Exibir */
 
 
   //console.log({ estaMorto });
@@ -111,7 +114,9 @@ function Jogo() {
     const pararAnimacao = estaMorto ? "parar-animacao" : "";
 
   return (
-    <div className="jogo">
+      <div className="jogo">
+          <div>Pontos: {pontos}</div>
+          
       <img className="nuvens" src={nuvens} alt="Nuvens" />
 
       <img ref={canoRef} className={"cano " + pararAnimacao} src={cano} alt="Cano" />
