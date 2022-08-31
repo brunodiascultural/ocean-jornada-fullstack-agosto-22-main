@@ -5,7 +5,7 @@ import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
 import { useEffect, useRef, useState } from "react";
 
-function Jogo() {
+function Jogo(props) {
   // Criando o estado 'estaPulando', com o valor padrão 'false',
   // Primeiro  valor é apenas para ler (GET)
   // Segundo valor é para atualizar o estado (SET)
@@ -43,24 +43,33 @@ function Jogo() {
     );
   }
 
-  // Implementação temporária para exibir se o mário está no cano
-  // ou não
-    setInterval(function () {
-    // Pegamos o valor que determinar se o Mario
-    // está no cano ou não
-    const estaNoCano = marioEstaNoCano();
+  useEffect(
+    // Effect
+    function () {
+      // Implementação temporária para exibir se o mário
+      // está no cano ou não
+      const interval = setInterval(function () {
+        // Pegamos o valor que determinar se o Mario
+        // está no cano ou não
+        const estaNoCano = marioEstaNoCano();
 
-    // Se o Mario não estiver no cano, encerramos a função com `return`
-    if (!estaNoCano) {
-      return;
-    }
+        // Se o Mario não estiver no cano, encerramos a função com `return`
+        if (!estaNoCano || estaMorto) {
+          return;
+        }
 
-    //console.log("Mário está no cano?", valor);
-      
-    // Caso esteja no cano, atualizamos o estado
-    // `estaMorto` para `true`
-    setEstaMorto(true);
-  }, 100);
+        // Caso esteja no cano, atualizamos o estado
+        // `estaMorto` para `true`
+        setEstaMorto(true);
+        props.onMorrer();
+      }, 100);
+
+      // (Opcional) Return mecanismo que desfaz o Effect anterior
+      return () => clearInterval(interval);
+    },
+    // Lista de dependências
+    [estaMorto, props]
+  );
     
     // UseEffect
   useEffect(
@@ -72,20 +81,16 @@ function Jogo() {
         }
 
         setPontos(pontos + 1);
-
-        console.log({ pontos });
       }, 500);
 
       return () => clearInterval(interval);
     },
     [estaMorto, pontos]
   );
-    
-    /* 
-    - Exibir */
-
-
-  //console.log({ estaMorto });
+    /*
+  - Exibir pontos em tempo real (DESAFIO)
+  - Quando der GameOver, exibir o HighScore
+  */
 
   document.onkeydown = function () {
     // Atualizamos o estado para true

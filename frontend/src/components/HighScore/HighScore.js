@@ -8,8 +8,8 @@ function HighScore() {
         <div>
             <h1>HighScore</h1>
 
-            <div>José - 90 pontos</div>
-            <div>João - 50 pontos</div>
+            <div>José  - 90 pontos</div>
+            <div>João  - 50 pontos</div>
             <div>Maria - 30 pontos</div>
         </div>
 
