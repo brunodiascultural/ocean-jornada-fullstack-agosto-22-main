@@ -3,7 +3,7 @@ import nuvens from "../../assets/clouds.png";
 import cano from "../../assets/pipe.png";
 import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Jogo() {
   // Criando o estado 'estaPulando', com o valor padrão 'false',
@@ -12,8 +12,11 @@ function Jogo() {
   // No momneto que um estado é atualizado, o componente atualiza
   // tudo o que está sendo renderizado
 
-  const [estaPulando, setEstaPulando] = useState(false);
-  const [estaMorto, setEstaMorto] = useState(false);
+    const [estaPulando, setEstaPulando] = useState(false);
+    
+    const [estaMorto, setEstaMorto] = useState(false);
+    
+    const [pontos, setPontos] = useState(0);
 
   // Criamos as referências para `mario` e `cano`
   const marioRef = useRef();
@@ -42,7 +45,9 @@ function Jogo() {
 
   // Implementação temporária para exibir se o mário está no cano
   // ou não
-  setInterval(function () {
+    setInterval(function () {
+    // Pegamos o valor que determinar se o Mario
+    // está no cano ou não
     const estaNoCano = marioEstaNoCano();
 
     // Se o Mario não estiver no cano, encerramos a função com `return`
@@ -51,13 +56,33 @@ function Jogo() {
     }
 
     //console.log("Mário está no cano?", valor);
+      
+    // Caso esteja no cano, atualizamos o estado
+    // `estaMorto` para `true`
     setEstaMorto(true);
   }, 100);
     
-    // Salvar a pontuação
-    
+    // UseEffect
+  useEffect(
+    function () {
+      // Salvar a pontuação
+      const interval = setInterval(function () {
+        if (estaMorto) {
+          return;
+        }
 
-  console.log({ estaMorto });
+        setPontos(pontos + 1);
+
+        console.log({ pontos });
+      }, 500);
+
+      return () => clearInterval(interval);
+    },
+    [estaMorto, pontos]
+  );
+
+
+  //console.log({ estaMorto });
 
   document.onkeydown = function () {
     // Atualizamos o estado para true
