@@ -2,21 +2,18 @@ import "./Jogo.css";
 import nuvens from "../../assets/clouds.png";
 import cano from "../../assets/pipe.png";
 import mario from "../../assets/mario.gif";
-import { useRef,useState } from "react";
+import gameOver from "../../assets/game-over.png";
+import { useRef, useState } from "react";
 
 function Jogo() {
-    // Criando o estado 'estaPulando', com o valor padrão 'false',
-    // Primeiro  valor é apenas para ler (GET)
-    // Segundo valor é para atualizar o estado (SET)
-    // No momneto que um estado é atualizado, o componente atualiza
-    // tudo o que está sendo renderizado
-    
-    // Criamos o estado `estaPulando`, com o valor padrão `false`.
-  // Primeiro valor é apenas para ler (GET)
+  // Criando o estado 'estaPulando', com o valor padrão 'false',
+  // Primeiro  valor é apenas para ler (GET)
   // Segundo valor é para atualizar o estado (SET)
-  // No momento que um estado é atualizado, o componente atualiza
+  // No momneto que um estado é atualizado, o componente atualiza
   // tudo o que está sendo renderizado
+
   const [estaPulando, setEstaPulando] = useState(false);
+  const [estaMorto, setEstaMorto] = useState(false);
 
   // Criamos as referências para `mario` e `cano`
   const marioRef = useRef();
@@ -46,39 +43,64 @@ function Jogo() {
   // Implementação temporária para exibir se o mário está no cano
   // ou não
   setInterval(function () {
-    const valor = marioEstaNoCano();
+    const estaNoCano = marioEstaNoCano();
 
-    console.log("Mário está no cano?", valor);
-  }, 100);
-
-    document.onkeydown = function () {
-        // Atualizamos o estado para true
-        setEstaPulando(true);
-
-        setTimeout(function () { 
-            // Voltamos o estado para o valor inicial
-            setEstaPulando(false);
-        }, 600);
-    };
-    // Por padrão, o elemento tem class '.mario'
-    let marioClassName = "mario";
-
-    // Caso esteja pulando (valor true), a classe será '.mario' e '.mario-pulo'
-    if (estaPulando) {
-        marioClassName = "mario mario-pulo";
+    // Se o Mario não estiver no cano, encerramos a função com `return`
+    if (!estaNoCano) {
+      return;
     }
 
-    return (
-        <div className="jogo">
-            <img className="nuvens" src={nuvens} alt="Nuvens" />
-            
-            <img className="cano" src={cano} alt="Cano" />
-            
-            <img className={marioClassName} src={mario} alt="Mario" /> 
+    //console.log("Mário está no cano?", valor);
+    setEstaMorto(true);
+  }, 100);
+    
+    // Salvar a pontuação
+    
 
-            <div className="chao"></div>
-        </div>
-    );
+  console.log({ estaMorto });
+
+  document.onkeydown = function () {
+    // Atualizamos o estado para true
+    setEstaPulando(true);
+
+    setTimeout(function () {
+      // Voltamos o estado para o valor inicial
+      setEstaPulando(false);
+    }, 600);
+  };
+  // Por padrão, o elemento tem class '.mario'
+  let marioClassName = "mario";
+
+  // Caso esteja pulando (valor true), a classe será '.mario' e '.mario-pulo'
+  if (estaPulando) {
+    marioClassName = "mario mario-pulo";
+  }
+
+  // No lugar de declarar uma variável e mudar o valor dela em um caso de `if`,
+  // como fizemos com o className do Mario, podemos criar uma variável
+  // com dois valores, um para caso a condição seja verdadeira, outro para
+  // caso a condição seja false
+  // Esse é o Operador Ternário!
+    const marioImage = estaMorto ? gameOver : mario;
+
+    const pararAnimacao = estaMorto ? "parar-animacao" : "";
+
+  return (
+    <div className="jogo">
+      <img className="nuvens" src={nuvens} alt="Nuvens" />
+
+      <img ref={canoRef} className={"cano " + pararAnimacao} src={cano} alt="Cano" />
+
+      <img
+        ref={marioRef}
+        className={marioClassName}
+        src={marioImage}
+        alt="Mário"
+      />
+
+      <div className="chao"></div>
+    </div>
+  );
 }
 
 export default Jogo;
