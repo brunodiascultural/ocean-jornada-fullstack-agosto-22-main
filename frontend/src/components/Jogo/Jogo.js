@@ -61,14 +61,14 @@ function Jogo(props) {
         // Caso esteja no cano, atualizamos o estado
         // `estaMorto` para `true`
         setEstaMorto(true);
-        props.onMorrer();
+        props.onMorrer(pontos);
       }, 100);
 
       // (Opcional) Return mecanismo que desfaz o Effect anterior
       return () => clearInterval(interval);
     },
     // Lista de dependências
-    [estaMorto, props]
+    [estaMorto, pontos, props]
   );
     
     // UseEffect
@@ -80,12 +80,13 @@ function Jogo(props) {
           return;
         }
 
-        setPontos(pontos + 1);
+          setPontos(pontos + 1);
+          props.onPontos(pontos + 1);
       }, 500);
 
       return () => clearInterval(interval);
     },
-    [estaMorto, pontos]
+    [estaMorto, pontos, props]
   );
     /*
   - Exibir pontos em tempo real (DESAFIO)

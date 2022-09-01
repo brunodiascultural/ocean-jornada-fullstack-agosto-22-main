@@ -1,8 +1,8 @@
 import "./HighScore.css";
 
-function HighScore() {
+function HighScore(props) {
     return <div className="HighScore">
-        <div>Você fez <b>50</b> pontos!
+        <div>Você fez <b>{ props.pontos}</b> pontos!
         </div>
 
         <div>
