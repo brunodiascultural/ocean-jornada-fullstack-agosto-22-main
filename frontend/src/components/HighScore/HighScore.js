@@ -1,9 +1,47 @@
+import { useEffect, useState } from "react";
 import "./HighScore.css";
 
-function HighScore(props) {
+/*
+- Exibir a pontuação que o jogador fez
+- Pegar os HighScores do Backend e exibir as pontuações recebidas
+- A pessoa irá digitar o nome e clicar no botão "Enviar" para submeter
+um novo score
+- Depois que submeteu um novo score, vamos recarregar a lista
+de scores
+*/
 
-    fetch("http://localhost:3333/pontuacoes").then(console.log);
-    
+function HighScore(props) {
+  // Fazer uma solicitação para o backend trazer as maiores pontuações
+  // Endpoint: [GET] http://localhost:3333/pontuacoes
+  // Solicitação = Requisição HTTP
+  // Para fazer requisições HTTP, temos algumas bibliotecas:
+  // Fetch
+  // Axios
+  // entre outras
+
+  const [itens, setItens] = useState(undefined);
+
+  useEffect(function () {
+    // Declaração da função
+    async function carregarPontuacoes() {
+      // Fazemos a requisição e recebemos a resposta
+      const response = await fetch("http://localhost:3333/pontuacoes");
+
+      // Extraímos o JSON do Corpo da Resposta
+      const body = await response.json();
+
+      // Atualizamos o estado `itens` com os valores recebido
+      // Ao atualizar o estado, o React renderiza o componente
+      // novamente
+      setItens(body);
+    }
+
+    // Executamos a função
+    carregarPontuacoes();
+  }, []);
+
+  const itensEstaoCarregando = itens === undefined;
+
   return (
     <div className="HighScore">
       <div>
@@ -13,9 +51,17 @@ function HighScore(props) {
       <div>
         <h1>HighScore</h1>
 
-        <div>José - 90 pontos</div>
-        <div>João - 50 pontos</div>
-        <div>Maria - 30 pontos</div>
+        {itensEstaoCarregando ? (
+          <div>Carregando...</div>
+        ) : (
+          <div>
+            {itens.map((item) => (
+              <div>
+                {item.nome} - {item.pontos}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div>

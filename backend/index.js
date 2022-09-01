@@ -28,7 +28,7 @@ async function main() {
 
     const app = express();
 
-    // Ativamos as configurações do CORS - instalar na pasta backend  npm i cors 
+    // Ativamos as configurações do CORS - instalar na pasta backend (npm i cors) 
     app.use[cors()];
 
     // Sinalizamos para o express que estamos usando
