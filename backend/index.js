@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const cors = require("cors");
 
 // const url = "mongodb://localhost:27017";
 const url = "mongodb+srv://brunodias:a9zejQvqaKEa8FJS@cluster0.ny5c8.mongodb.net/";
@@ -26,6 +27,9 @@ async function main() {
     console.log("Banco de dados conectado com sucesso!");
 
     const app = express();
+
+    // Ativamos as configurações do CORS - instalar na pasta backend  npm i cors 
+    app.use[cors()];
 
     // Sinalizamos para o express que estamos usando
     // JSON no body das requisições
@@ -87,7 +91,7 @@ async function main() {
         res.send(item);
     });
 
-    app.listen(process.env.PORT || 3000);
+    app.listen(process.env.PORT || 3333);
 }
 
 // Executamos a função man[]

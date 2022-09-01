@@ -7,9 +7,8 @@ function App() {
     const [gameOver, setGameOver] = useState(false);
     const [pontos, setPontos] = useState(0);
 
-    function onMorrer(pontosAoMorrer) {
+    function onMorrer() {
         setGameOver(true);
-        setPontos(pontosAoMorrer);
     }
 
     function onPontos(novosPontos) {
